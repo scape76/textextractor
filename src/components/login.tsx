@@ -56,6 +56,14 @@ export default function Login({ isLogin }: { isLogin: boolean }) {
       if (error) {
         return toast.error(error.message);
       } else {
+        await fetch("/api/users", {
+          method: "POST",
+          headers: {
+            "Content-type": "application/json",
+          },
+          body: JSON.stringify(data.user),
+        });
+
         toast.success(
           "Success! Please, check your email for further instructions.",
           {

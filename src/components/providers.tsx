@@ -31,6 +31,7 @@ export default function RootStyleRegistry({
     >
       {children}
       <Toaster
+        position="bottom-right"
         toastOptions={{
           style: {
             borderRadius: "10px",

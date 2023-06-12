@@ -1,8 +1,6 @@
 import "@/styles/globals.css";
-import { Lato } from "next/font/google";
 import Providers from "@/components/providers";
-import createClient from "@/lib/supabase-server";
-import Navbar from "@/components/navbar";
+import { Lato } from "next/font/google";
 
 const lato = Lato({
   subsets: ["latin", "latin-ext"],
@@ -24,19 +22,10 @@ export default async function RootLayout({
 }: {
   children: React.ReactNode;
 }) {
-  const supabase = createClient();
-
-  const {
-    data: { user },
-  } = await supabase.auth.getUser();
-
   return (
     <html lang="en">
       <body className={lato.className}>
-        <Providers>
-          <Navbar user={user} />
-          {children}
-        </Providers>
+        <Providers>{children}</Providers>
       </body>
     </html>
   );
