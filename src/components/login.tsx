@@ -50,19 +50,17 @@ export default function Login({ isLogin }: { isLogin: boolean }) {
       const { error, data } = await supabase.auth.signUp({
         email: values.email,
         password: values.password,
-        options: { emailRedirectTo: `${location.origin}/auth/callback` },
+        options: { emailRedirectTo: `${location.origin}` },
       });
 
       if (error) {
         return toast.error(error.message);
       } else {
-        await fetch("/api/users", {
-          method: "POST",
-          headers: {
-            "Content-type": "application/json",
-          },
-          body: JSON.stringify(data.user),
-        });
+        console.log("inseting");
+
+        await supabase
+          .from("users")
+          .insert({ id: data.user?.id, email: data.user?.email });
 
         toast.success(
           "Success! Please, check your email for further instructions.",

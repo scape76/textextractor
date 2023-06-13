@@ -6,6 +6,9 @@ import {
   User2,
   LogOut,
   FileType,
+  Image,
+  Upload,
+  X,
   type Icon as LucideIcon,
 } from "lucide-react";
 
@@ -17,4 +20,7 @@ export const Icons = {
   profile: User2,
   logout: LogOut,
   extract: FileType,
+  image: Image,
+  upload: Upload,
+  x: X
 };
