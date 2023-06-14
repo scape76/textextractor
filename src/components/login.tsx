@@ -50,7 +50,7 @@ export default function Login({ isLogin }: { isLogin: boolean }) {
       const { error, data } = await supabase.auth.signUp({
         email: values.email,
         password: values.password,
-        options: { emailRedirectTo: `${location.origin}` },
+        options: { emailRedirectTo: `${location.origin}/login` },
       });
 
       if (error) {

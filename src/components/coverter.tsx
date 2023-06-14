@@ -53,6 +53,7 @@ export default function Coverter({ user }: ConverterProps) {
                 imageRef.current.alt = files[0].name;
               }
               setFile(files[0]);
+              setText("");
             }}
             onReject={(files) => console.log("rejected files", files)}
             maxSize={3 * 1024 ** 2}
@@ -96,12 +97,29 @@ export default function Coverter({ user }: ConverterProps) {
 
           {!!user && (
             <Button
+              disabled={!!text}
               maw={"300px"}
               onClick={async () => {
                 if (!file) return;
                 try {
                   setIsLoading(true);
-                  setText((await performOCR(file)) || "");
+                  const text = await performOCR(file);
+                  console.log("here");
+                  const res = await fetch("/api/s3/upload", {
+                    method: "POST",
+                    headers: {
+                      "Content-type": "application/json",
+                    },
+                    body: JSON.stringify({ name: file.name }),
+                  });
+
+                  const { url, fields } = await res.json();
+                  console.log(url, fields)
+                  // get the text
+                  // get the presigned url from aws
+                  // upload an image to s3 bucket
+                  // make supabase query to insert new extraction
+                  // const
                 } catch (err) {
                   console.log(err);
                 } finally {
@@ -112,7 +130,8 @@ export default function Coverter({ user }: ConverterProps) {
               Convert to text
             </Button>
           )}
-          <span>{isLoading ? "Loading..." : text}</span>
+          {isLoading && <Icons.spinner className="animate-spin w-4 h-4" />}
+          <span>{text}</span>
         </Flex>
       </Box>
     </Center>
