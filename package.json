@@ -9,6 +9,8 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@aws-sdk/client-s3": "^3.352.0",
+    "@aws-sdk/s3-presigned-post": "^3.352.0",
     "@emotion/react": "^11.11.1",
     "@emotion/server": "^11.11.0",
     "@mantine/core": "^6.0.13",
@@ -37,6 +39,7 @@
   },
   "devDependencies": {
     "encoding": "^0.1.13",
+    "s3rver": "^3.7.1",
     "server-only": "^0.0.1",
     "supabase": "^1.64.8"
   }
