@@ -104,7 +104,6 @@ export default function Coverter({ user }: ConverterProps) {
                 try {
                   setIsLoading(true);
                   const text = await performOCR(file);
-                  console.log("here");
                   const res = await fetch("/api/s3/upload", {
                     method: "POST",
                     headers: {
@@ -113,13 +112,35 @@ export default function Coverter({ user }: ConverterProps) {
                     body: JSON.stringify({ name: file.name }),
                   });
 
-                  const { url, fields } = await res.json();
-                  console.log(url, fields)
-                  // get the text
-                  // get the presigned url from aws
-                  // upload an image to s3 bucket
-                  // make supabase query to insert new extraction
-                  // const
+                  const { url, fields, imageId } = await res.json();
+
+                  const data: Record<string, any> = {
+                    ...fields,
+                    "Content-Type": file.type,
+                    file,
+                  };
+
+                  const formData = new FormData();
+                  for (const name in data) {
+                    console.log(name, data[name]);
+                    formData.append(name, data[name]);
+                  }
+
+                  await Promise.all([
+                    fetch(url, {
+                      method: "POST",
+                      body: formData,
+                    }),
+                    fetch(`/api/extractions`, {
+                      method: "POST",
+                      headers: {
+                        "Content-type": "application/json",
+                      },
+                      body: JSON.stringify({ text, imageId }),
+                    }),
+                  ]);
+
+                  setText(text || "No text on the image was extracted");
                 } catch (err) {
                   console.log(err);
                 } finally {

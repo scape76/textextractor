@@ -9,8 +9,9 @@ import {
   Image,
   Upload,
   X,
-  type Icon as LucideIcon,
+  Group,
   Loader2,
+  type Icon as LucideIcon,
 } from "lucide-react";
 
 export type Icon = LucideIcon;
@@ -25,4 +26,5 @@ export const Icons = {
   upload: Upload,
   x: X,
   spinner: Loader2,
+  group: Group,
 };

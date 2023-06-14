@@ -43,13 +43,20 @@ const Nav: React.FC<NavProps> = ({ user }) => {
             </Flex>
           </Link>
           {!matches && (
-            <Link href="/extract">
-              <Text size={"lg"}>Extract</Text>
-            </Link>
+            <>
+              <Link href="/extract">
+                <Text size={"lg"}>Extract</Text>
+              </Link>
+              {user && (
+                <Link href="/collection">
+                  <Text size={"lg"}>Collection</Text>
+                </Link>
+              )}
+            </>
           )}
         </Flex>
         {matches ? (
-          <UserNav />
+          <UserNav user={user} />
         ) : (
           <>
             {!user && (

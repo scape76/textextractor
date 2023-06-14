@@ -44,7 +44,7 @@ export async function POST(req: Request) {
       ],
     });
 
-    return new Response(JSON.stringify({ url, fields }), { status: 200 });
+    return new Response(JSON.stringify({ url, fields, imageId }), { status: 200 });
   } catch (err) {
     if (err instanceof ZodError) {
       return new Response(JSON.stringify(err.errors), { status: 522 });

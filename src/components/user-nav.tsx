@@ -4,10 +4,13 @@ import { Menu, Burger } from "@mantine/core";
 import { Icons } from "./icons";
 import { useDisclosure } from "@mantine/hooks";
 import Link from "next/link";
+import type { User } from "@supabase/auth-helpers-nextjs";
 
-interface UserNavProps {}
+interface UserNavProps {
+  user: User | null;
+}
 
-const UserNav: React.FC<UserNavProps> = ({}) => {
+const UserNav: React.FC<UserNavProps> = ({ user }) => {
   const [opened, { toggle }] = useDisclosure(false);
   const label = opened ? "Close navigation" : "Open navigation";
   return (
@@ -21,6 +24,11 @@ const UserNav: React.FC<UserNavProps> = ({}) => {
         <Link href={"/extract"}>
           <Menu.Item icon={<Icons.extract size={14} />}>Extract</Menu.Item>
         </Link>
+        {user && (
+          <Link href="/collection">
+            <Menu.Item icon={<Icons.group size={14} />}>Collection</Menu.Item>
+          </Link>
+        )}
 
         <Menu.Divider />
 
