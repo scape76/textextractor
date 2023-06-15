@@ -13,7 +13,7 @@ const CollectionFeed: React.FC<CollectionFeedProps> = ({ extractions }) => {
     return (
       <Center my={"md"}>
         <Box p={"sm"} mx={"md"} w={"100%"} maw={"500px"}>
-          <Title>You haven't extracted anything yet :{`(`} </Title>
+          <Title>You haven&apos;t extracted anything yet :{`(`} </Title>
         </Box>
       </Center>
     );
@@ -23,7 +23,7 @@ const CollectionFeed: React.FC<CollectionFeedProps> = ({ extractions }) => {
     <Center my={"md"}>
       <Box p={"sm"} mx={"md"} w={"100%"} maw={"560px"}>
         <Title>
-          You've extracted {extractions?.length} text
+          You&apos;ve extracted {extractions?.length} text
           {extractions?.length > 1 && "s"}!
         </Title>
         {extractions?.map((e) => (

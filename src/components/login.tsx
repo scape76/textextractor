@@ -53,26 +53,23 @@ export default function Login({ isLogin }: { isLogin: boolean }) {
         options: { emailRedirectTo: `${location.origin}/login` },
       });
 
-      if (error) {
-        return toast.error(error.message);
-      } else {
-        console.log("inseting");
+      if (error || !data.user)
+        return toast.error(error?.message || "Something went wrong");
 
-        await supabase
-          .from("users")
-          .insert({ id: data.user?.id, email: data.user?.email });
+      await supabase
+        .from("users")
+        .insert({ id: data.user?.id, email: data.user?.email });
 
-        toast.success(
-          "Success! Please, check your email for further instructions.",
-          {
-            style: {
-              borderRadius: "10px",
-              background: "#333",
-              color: "#fff",
-            },
-          }
-        );
-      }
+      toast.success(
+        "Success! Please, check your email for further instructions.",
+        {
+          style: {
+            borderRadius: "10px",
+            background: "#333",
+            color: "#fff",
+          },
+        }
+      );
     }
   }
 
