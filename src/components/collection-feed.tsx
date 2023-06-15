@@ -22,7 +22,10 @@ const CollectionFeed: React.FC<CollectionFeedProps> = ({ extractions }) => {
   return (
     <Center my={"md"}>
       <Box p={"sm"} mx={"md"} w={"100%"} maw={"560px"}>
-        <Title>You've extracted {extractions?.length} texts!</Title>
+        <Title>
+          You've extracted {extractions?.length} text
+          {extractions?.length > 1 && "s"}!
+        </Title>
         {extractions?.map((e) => (
           <Paper w={"100%"} radius="lg" p="md" key={e.id} withBorder mt={"sm"}>
             <img width={"100%"} src={getImageUrl(e.imageId)} alt="your image" />
