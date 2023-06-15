@@ -1,11 +1,10 @@
 import { S3Client } from "@aws-sdk/client-s3";
 
-export const s3Client = new S3Client({
+import S3 from "aws-sdk/clients/s3";
+
+export const s3Client = new S3({
   region: "eu-central-1",
-  endpoint: "http://localhost:9000",
-  forcePathStyle: true,
-  credentials: {
-    accessKeyId: "S3RVER",
-    secretAccessKey: "S3RVER",
-  },
+  accessKeyId: process.env.AWS3_ACCESS,
+  secretAccessKey: process.env.AWS3_SECRET,
+  signatureVersion: "v4",
 });

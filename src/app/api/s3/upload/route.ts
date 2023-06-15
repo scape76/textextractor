@@ -8,7 +8,7 @@ import { ZodError } from "zod";
 const UPLOAD_MAX_FILE_SIZE = 500000; // 5MB
 
 const getBucketName = () => {
-  const bucketName = process.env.NEXT_PUBLIC_S3_BUCKET_NAME;
+  const bucketName = process.env.AWS3_BUCKET_NAME;
 
   if (!bucketName) {
     throw new Error("Bucket name is not provided");
@@ -28,23 +28,23 @@ export async function POST(req: Request) {
     }
 
     const json = await req.json();
-    const { name } = uploadImageSchema.parse(json);
+    const { name, type } = uploadImageSchema.parse(json);
 
     const imageId = `${uuidv4()}-${name}`;
 
-    const { url, fields } = await createPresignedPost(s3Client, {
+    const fileParams = {
       Bucket: getBucketName(),
       Key: imageId,
-      Fields: {
-        key: imageId,
-      },
-      Conditions: [
-        ["starts-with", "$Content-Type", "image/"],
-        ["content-length-range", 0, UPLOAD_MAX_FILE_SIZE],
-      ],
-    });
+      Expires: 600,
+      ContentType: type,
+      ACL: "public-read",
+    };
 
-    return new Response(JSON.stringify({ url, fields, imageId }), { status: 200 });
+    const url = await s3Client.getSignedUrlPromise("putObject", fileParams);
+
+    return new Response(JSON.stringify({ url, imageId }), {
+      status: 200,
+    });
   } catch (err) {
     if (err instanceof ZodError) {
       return new Response(JSON.stringify(err.errors), { status: 522 });
