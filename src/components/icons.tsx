@@ -11,6 +11,8 @@ import {
   X,
   Group,
   Loader2,
+  Copy,
+  Check,
   type Icon as LucideIcon,
 } from "lucide-react";
 
@@ -27,4 +29,6 @@ export const Icons = {
   x: X,
   spinner: Loader2,
   group: Group,
+  copy: Copy,
+  check: Check,
 };
