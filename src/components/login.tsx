@@ -45,6 +45,7 @@ export default function Login({ isLogin }: { isLogin: boolean }) {
       } else {
         toast.success("You are succesfully logged in.");
         router.push("/");
+        router.refresh();
       }
     } else {
       const { error, data } = await supabase.auth.signUp({
