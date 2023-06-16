@@ -23,7 +23,6 @@ interface ConverterProps {
 }
 
 export default function Coverter({ user }: ConverterProps) {
-  console.log(user);
   const [isLoading, setIsLoading] = React.useState(false);
   const [file, setFile] = React.useState<File | null>(null);
   const [text, setText] = React.useState("");
@@ -110,18 +109,27 @@ export default function Coverter({ user }: ConverterProps) {
                     headers: {
                       "Content-type": "application/json",
                     },
-                    body: JSON.stringify({ name: file.name, type: file.type }),
+                    body: JSON.stringify({ name: file.name }),
                   });
 
-                  const { url, imageId } = await res.json();
+                  const { url, fields, imageId } = await res.json();
+
+                  const data: Record<string, any> = {
+                    ...fields,
+                    "Content-Type": file.type,
+                    file,
+                  };
+
+                  const formData = new FormData();
+                  for (const name in data) {
+                    console.log(name, data[name]);
+                    formData.append(name, data[name]);
+                  }
 
                   await Promise.all([
                     fetch(url, {
-                      method: "PUT",
-                      headers: {
-                        "Access-Control-Allow-Origin": "*",
-                      },
-                      body: file,
+                      method: "POST",
+                      body: formData,
                     }),
                     fetch(`/api/extractions`, {
                       method: "POST",

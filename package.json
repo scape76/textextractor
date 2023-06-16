@@ -25,7 +25,6 @@
     "@types/react": "18.2.11",
     "@types/react-dom": "18.2.4",
     "autoprefixer": "^10.4.14",
-    "aws-sdk": "^2.1397.0",
     "eslint": "8.42.0",
     "eslint-config-next": "13.4.4",
     "lucide-react": "^0.241.0",

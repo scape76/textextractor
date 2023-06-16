@@ -10,8 +10,7 @@ const page = async () => {
   const { data, error } = await supabase
     .from("extractions")
     .select()
-    .eq("userId", user?.id)
-    .order("created_at", { ascending: false });
+    .eq("userId", user?.id);
 
   if (error) console.log(error);
 
