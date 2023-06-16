@@ -1,8 +1,9 @@
 "use client";
 
 import * as React from "react";
-import { Box, Center, Paper, Blockquote, Title } from "@mantine/core";
+import { Box, Center, Paper, Blockquote, Title, Flex } from "@mantine/core";
 import { getImageUrl } from "@/lib/get-image-url";
+import CopyButton from "./copy-button";
 
 interface CollectionFeedProps {
   extractions: Extraction[] | null;
@@ -26,9 +27,14 @@ const CollectionFeed: React.FC<CollectionFeedProps> = ({ extractions }) => {
         {extractions?.map((e) => (
           <Paper w={"100%"} radius="lg" p="md" key={e.id} withBorder mt={"sm"}>
             <img width={"100%"} src={getImageUrl(e.imageId)} alt="your image" />
-            <Blockquote cite="– Tesseract.js" mt="sm">
-              {e.text}
-            </Blockquote>
+            <Paper p={"xs"}>
+              <Flex>
+                <Blockquote cite="– Tesseract.js" mt="sm">
+                  {e.text}
+                </Blockquote>
+                <CopyButton value={e.text || ""} />
+              </Flex>
+            </Paper>
           </Paper>
         ))}
       </Box>

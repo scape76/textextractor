@@ -11,12 +11,16 @@ import {
   Button,
   Image,
   Group,
+  Grid,
   Text,
+  Loader,
   rem,
   Center,
+  Paper,
 } from "@mantine/core";
 import { Dropzone, IMAGE_MIME_TYPE } from "@mantine/dropzone";
 import Link from "next/link";
+import CopyButton from "./copy-button";
 
 interface ConverterProps {
   user: User | null;
@@ -151,8 +155,21 @@ export default function Coverter({ user }: ConverterProps) {
               Convert to text
             </Button>
           )}
-          {isLoading && <Icons.spinner className="animate-spin w-4 h-4" />}
-          <span>{text}</span>
+          {isLoading && <Loader color="gray" />}
+
+          {text && !isLoading && (
+            <Paper withBorder p={"xs"}>
+              <Flex>
+                <Paper p={"md"}>
+                  <Text>
+                    {text ||
+                      "Hello teresdaslo dlasod asod kapsdk aosdl pasldas ldoasldoa[sd [aso"}
+                  </Text>
+                </Paper>
+                <CopyButton value={text} />
+              </Flex>
+            </Paper>
+          )}
         </Flex>
       </Box>
     </Center>

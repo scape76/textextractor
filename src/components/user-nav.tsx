@@ -32,10 +32,22 @@ const UserNav: React.FC<UserNavProps> = ({ user }) => {
 
         <Menu.Divider />
 
-        <Menu.Label>Danger zone</Menu.Label>
-        <Menu.Item color="red" icon={<Icons.logout size={14} />}>
-          Logout
-        </Menu.Item>
+        {user ? (
+          <>
+            <Menu.Label>Danger zone</Menu.Label>
+            <Menu.Item color="red" icon={<Icons.logout size={14} />}>
+              Logout
+            </Menu.Item>
+          </>
+        ) : (
+          <>
+            <Link href={"/login"}>
+              <Menu.Item color="green" icon={<Icons.logout size={14} />}>
+                Login
+              </Menu.Item>
+            </Link>
+          </>
+        )}
       </Menu.Dropdown>
     </Menu>
   );
