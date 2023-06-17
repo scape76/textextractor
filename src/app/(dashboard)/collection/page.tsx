@@ -1,7 +1,7 @@
 import supabase from "@/lib/supabase-server";
 import * as React from "react";
 
-import CollectionFeed from "@/components/collection-feed";
+import CollectionFeed from "@/components/CollectionFeed";
 
 const page = async () => {
   const {
@@ -10,8 +10,7 @@ const page = async () => {
   const { data, error } = await supabase
     .from("extractions")
     .select()
-    .eq("userId", user?.id)
-    .order("created_at", { ascending: false });
+    .eq("userId", user?.id);
 
   if (error) console.log(error);
 
