@@ -1,5 +1,5 @@
 import "@/styles/globals.css";
-import Providers from "@/components/providers";
+import Providers from "@/components/Providers";
 import { Lato } from "next/font/google";
 
 const lato = Lato({

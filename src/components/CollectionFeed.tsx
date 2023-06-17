@@ -3,7 +3,7 @@
 import * as React from "react";
 import { Box, Center, Paper, Blockquote, Title, Flex } from "@mantine/core";
 import { getImageUrl } from "@/lib/get-image-url";
-import CopyButton from "./copy-button";
+import CopyButton from "./CopyButton";
 
 interface CollectionFeedProps {
   extractions: Extraction[] | null;

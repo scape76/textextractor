@@ -1,19 +1,13 @@
 import * as React from "react";
 
-import { Button, Box } from "@mantine/core";
-import { Icons } from "@/components/icons";
+import { Button, Box, BoxProps } from "@mantine/core";
+import { Icons } from "@/components/Icons";
 
-interface CopyButtonProps
-  extends React.ButtonHTMLAttributes<HTMLButtonElement> {
+interface CopyButtonProps extends BoxProps {
   value: string;
 }
 
-
-const CopyButton: React.FC<CopyButtonProps> = ({
-  value,
-  className,
-  ...props
-}) => {
+const CopyButton: React.FC<CopyButtonProps> = ({ value, ...props }) => {
   const [hasCopied, setHasCopied] = React.useState(false);
 
   React.useEffect(() => {
@@ -27,9 +21,8 @@ const CopyButton: React.FC<CopyButtonProps> = ({
     setHasCopied(true);
   }
 
-
   return (
-    <Box pt={"xs"} onClick={() => console.log("hello")}>
+    <Box pt={"xs"} onClick={() => console.log("hello")} {...props}>
       <Button
         size="xs"
         compact

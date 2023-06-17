@@ -13,6 +13,9 @@ import {
   Loader2,
   Copy,
   Check,
+  Sun,
+  Moon,
+  Pointer,
   type Icon as LucideIcon,
 } from "lucide-react";
 
@@ -31,4 +34,7 @@ export const Icons = {
   group: Group,
   copy: Copy,
   check: Check,
+  sun: Sun,
+  moon: Moon,
+  pointer: Pointer,
 };

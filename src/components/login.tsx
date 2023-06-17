@@ -3,7 +3,7 @@
 import supabase from "@/lib/supabase-browser";
 import { Center, Flex, TextInput, Title, Button, Text } from "@mantine/core";
 import { useViewportSize } from "@mantine/hooks";
-import { Icons } from "@/components/icons";
+import { Icons } from "@/components/Icons";
 import { useForm } from "@mantine/form";
 import { toast } from "react-hot-toast";
 import Link from "next/link";
