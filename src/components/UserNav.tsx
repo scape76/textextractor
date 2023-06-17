@@ -1,10 +1,11 @@
 import * as React from "react";
 
-import { Menu, Burger } from "@mantine/core";
-import { Icons } from "./icons";
+import { Menu, Burger, Flex } from "@mantine/core";
+import { Icons } from "./Icons";
 import { useDisclosure } from "@mantine/hooks";
 import Link from "next/link";
 import type { User } from "@supabase/auth-helpers-nextjs";
+import ThemeSwitch from "./ThemeSwitch";
 
 interface UserNavProps {
   user: User | null;
@@ -20,7 +21,11 @@ const UserNav: React.FC<UserNavProps> = ({ user }) => {
       </Menu.Target>
 
       <Menu.Dropdown>
-        <Menu.Label>Application</Menu.Label>
+        <Menu.Label>
+          <Flex justify={"space-between"}>
+            Application <ThemeSwitch />
+          </Flex>
+        </Menu.Label>
         <Link href={"/extract"}>
           <Menu.Item icon={<Icons.extract size={14} />}>Extract</Menu.Item>
         </Link>

@@ -1,5 +1,5 @@
 import * as React from "react";
-import Login from "@/components/login";
+import Login from "@/components/Login";
 
 const page = async ({}) => {
   return <Login isLogin={true} />;

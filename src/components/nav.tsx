@@ -10,7 +10,8 @@ import { useMediaQuery } from "@mantine/hooks";
 import { Button, Flex, Header, Text, MediaQuery } from "@mantine/core";
 import Image from "next/image";
 import Link from "next/link";
-import UserNav from "@/components/user-nav";
+import UserNav from "@/components/UserNav";
+import ThemeSwitch from "./ThemeSwitch";
 
 interface NavProps {
   user: User | null;
@@ -55,18 +56,21 @@ const Nav: React.FC<NavProps> = ({ user }) => {
             </>
           )}
         </Flex>
-        {matches ? (
-          <UserNav user={user} />
-        ) : (
-          <>
-            {!user && (
-              <Link href={"/login"}>
-                <Button>Login</Button>
-              </Link>
-            )}
-            {!!user && <Button onClick={logout}>Logout</Button>}
-          </>
-        )}
+        <Flex gap={"lg"}>
+          {matches ? (
+            <UserNav user={user} />
+          ) : (
+            <>
+              <ThemeSwitch size="lg" iconSize={18}/>
+              {!user && (
+                <Link href={"/login"}>
+                  <Button>Login</Button>
+                </Link>
+              )}
+              {!!user && <Button onClick={logout}>Logout</Button>}
+            </>
+          )}
+        </Flex>
       </Flex>
     </Header>
   );

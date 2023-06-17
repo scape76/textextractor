@@ -4,7 +4,7 @@ import * as React from "react";
 import type { User } from "@supabase/auth-helpers-nextjs";
 import { performOCR } from "@/lib/ocr";
 
-import { Icons } from "@/components/icons";
+import { Icons } from "@/components/Icons";
 import {
   Flex,
   Box,
@@ -20,7 +20,7 @@ import {
 } from "@mantine/core";
 import { Dropzone, IMAGE_MIME_TYPE } from "@mantine/dropzone";
 import Link from "next/link";
-import CopyButton from "./copy-button";
+import CopyButton from "@/components/CopyButton";
 
 interface ConverterProps {
   user: User | null;

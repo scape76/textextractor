@@ -1,6 +1,6 @@
 import supabase from "@/lib/supabase-server";
 
-import Header from "@/components/nav";
+import Header from "@/components/Nav";
 
 export default async function RootLayout({
   children,

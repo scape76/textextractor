@@ -1,8 +1,13 @@
 "use client";
 
 import { CacheProvider } from "@emotion/react";
-import { useEmotionCache, MantineProvider } from "@mantine/core";
-import { useServerInsertedHTML } from "next/navigation";
+import {
+  useEmotionCache,
+  MantineProvider,
+  ColorSchemeProvider,
+  type ColorScheme,
+} from "@mantine/core";
+import { useState } from "react";
 import { Toaster } from "react-hot-toast";
 
 export default function RootStyleRegistry({
@@ -10,37 +15,54 @@ export default function RootStyleRegistry({
 }: {
   children: React.ReactNode;
 }) {
-  // const cache = useEmotionCache();
-  // cache.compat = true;
+  const [colorScheme, setColorScheme] = useState<ColorScheme>("light");
 
-  // useServerInsertedHTML(() => (
-  //   <style
-  //     data-emotion={`${cache.key} ${Object.keys(cache.inserted).join(" ")}`}
-  //     dangerouslySetInnerHTML={{
-  //       __html: Object.values(cache.inserted).join(" "),
-  //     }}
-  //   />
-  // ));
+  const toggleColorScheme = (value?: ColorScheme) => {
+    setColorScheme(value || (colorScheme === "dark" ? "light" : "dark"));
+  };
 
   return (
-    // <CacheProvider value={cache}>
-    <MantineProvider
-      withGlobalStyles
-      withNormalizeCSS
-      theme={{ colorScheme: "dark" }}
+    <ColorSchemeProvider
+      colorScheme={colorScheme}
+      toggleColorScheme={toggleColorScheme}
     >
-      {children}
-      <Toaster
-        position="bottom-right"
-        toastOptions={{
-          style: {
-            borderRadius: "10px",
-            background: "#333",
-            color: "#fff",
-          },
+      <MantineProvider
+        theme={{
+          colorScheme: colorScheme,
+          globalStyles: (theme) => ({
+            "*, *::before, *::after": {
+              boxSizing: "border-box",
+            },
+
+            body: {
+              ...theme.fn.fontStyles(),
+              backgroundColor:
+                theme.colorScheme === "dark"
+                  ? theme.colors.dark[7]
+                  : theme.white,
+              color:
+                theme.colorScheme === "dark"
+                  ? theme.colors.dark[0]
+                  : theme.black,
+              lineHeight: theme.lineHeight,
+            },
+          }),
         }}
-      />
-    </MantineProvider>
-    // </CacheProvider>
+        withGlobalStyles
+        withNormalizeCSS
+      >
+        {children}
+        <Toaster
+          position="bottom-right"
+          toastOptions={{
+            style: {
+              borderRadius: "10px",
+              background: "#333",
+              color: "#fff",
+            },
+          }}
+        />
+      </MantineProvider>
+    </ColorSchemeProvider>
   );
 }
