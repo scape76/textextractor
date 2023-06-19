@@ -10,8 +10,8 @@ export default async function Home() {
       <Box p={"sm"} mx={"md"} w={"100%"} maw={"560px"}>
         <Title>Extract texts with a click of a button</Title>
         <Text mt={"md"}>
-          Save time by extracting your text from an image using ai,
-          you don&apos;t need to do this by yourself.
+          Save time by extracting your text from an image using ai, you
+          don&apos;t need to do this by yourself.
         </Text>
         <Timeline active={1} bulletSize={24} lineWidth={2} mt={"lg"}>
           <Timeline.Item
@@ -24,8 +24,18 @@ export default async function Home() {
           </Timeline.Item>
 
           <Timeline.Item
+            bullet={<Icons.languages size={12} />}
+            title="Select a language"
+          >
+            <Text color="dimmed" size="sm">
+              Select a language that is associated with your image
+            </Text>
+          </Timeline.Item>
+
+          <Timeline.Item
             bullet={<Icons.pointer size={12} />}
             title="Click 'extract'"
+            lineVariant="dashed"
           >
             <Text color="dimmed" size="sm">
               Now Tesseract.js will do the rest for you

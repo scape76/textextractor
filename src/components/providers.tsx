@@ -7,6 +7,7 @@ import {
   ColorSchemeProvider,
   type ColorScheme,
 } from "@mantine/core";
+import { useLocalStorage } from "@mantine/hooks";
 import { useState } from "react";
 import { Toaster } from "react-hot-toast";
 
@@ -15,7 +16,11 @@ export default function RootStyleRegistry({
 }: {
   children: React.ReactNode;
 }) {
-  const [colorScheme, setColorScheme] = useState<ColorScheme>("light");
+  const [colorScheme, setColorScheme] = useLocalStorage<ColorScheme>({
+    key: 'mantine-color-scheme',
+    defaultValue: 'dark',
+    getInitialValueInEffect: true,
+  });
 
   const toggleColorScheme = (value?: ColorScheme) => {
     setColorScheme(value || (colorScheme === "dark" ? "light" : "dark"));
