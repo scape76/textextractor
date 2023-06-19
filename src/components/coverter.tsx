@@ -2,35 +2,40 @@
 
 import * as React from "react";
 import type { User } from "@supabase/auth-helpers-nextjs";
-import { performOCR } from "@/lib/ocr";
+import { initializeWorker, performOCR } from "@/lib/ocr";
 
 import { Icons } from "@/components/Icons";
 import {
   Flex,
   Box,
   Button,
-  Image,
   Group,
-  Grid,
   Text,
   Loader,
-  rem,
   Center,
   Paper,
 } from "@mantine/core";
 import { Dropzone, IMAGE_MIME_TYPE } from "@mantine/dropzone";
 import Link from "next/link";
 import CopyButton from "@/components/CopyButton";
+import LanguagesAutocomplete from "./LanguagesAutocomplete";
+import { languages } from "@/lib/languages";
+import toast from "react-hot-toast";
 
 interface ConverterProps {
   user: User | null;
 }
 
 export default function Coverter({ user }: ConverterProps) {
+  const [language, setLanguage] = React.useState<string>(languages["eng"]);
   const [isLoading, setIsLoading] = React.useState(false);
   const [file, setFile] = React.useState<File | null>(null);
   const [text, setText] = React.useState("");
   const imageRef = React.useRef<HTMLImageElement>(null);
+
+  React.useEffect(() => {
+    initializeWorker();
+  }, []);
 
   return (
     <Center>
@@ -93,6 +98,15 @@ export default function Coverter({ user }: ConverterProps) {
             </Group>
           </Dropzone>
 
+          <LanguagesAutocomplete
+            w={"100%"}
+            required
+            label="Choose a language"
+            placeholder="Pick one"
+            value={language}
+            onChange={setLanguage}
+          />
+
           {!user && (
             <Link href={"/login"}>
               <Button maw={"300px"}>Sign in to continue</Button>
@@ -104,10 +118,12 @@ export default function Coverter({ user }: ConverterProps) {
               disabled={!!text}
               maw={"300px"}
               onClick={async () => {
-                if (!file) return;
+                if (!file) return toast.error("Select a file first");
+                if (!Object.values(languages).includes(language))
+                  return toast.error("Language name is not appropriate");
                 try {
                   setIsLoading(true);
-                  const text = await performOCR(file);
+                  const text = await performOCR(file, language);
                   const res = await fetch("/api/s3/upload", {
                     method: "POST",
                     headers: {
@@ -126,7 +142,6 @@ export default function Coverter({ user }: ConverterProps) {
 
                   const formData = new FormData();
                   for (const name in data) {
-                    console.log(name, data[name]);
                     formData.append(name, data[name]);
                   }
 

@@ -1,7 +1,7 @@
 import supabase from "@/lib/supabase-server";
 import * as React from "react";
 
-import CollectionFeed from "@/components/collection-feed";
+import CollectionFeed from "@/components/CollectionFeed";
 
 const page = async () => {
   const {

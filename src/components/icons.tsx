@@ -16,6 +16,7 @@ import {
   Sun,
   Moon,
   Pointer,
+  Languages,
   type Icon as LucideIcon,
 } from "lucide-react";
 
@@ -37,4 +38,5 @@ export const Icons = {
   sun: Sun,
   moon: Moon,
   pointer: Pointer,
+  languages: Languages
 };
